@@ -1,31 +1,23 @@
-from .generator import Generator
-from .parser import build_prompt
-from .json_loader import load_json
+from src.generator import Generator
 
 
-functions = load_json(
-    "data/input/functions_definition.json"
-)
+functions = [
+    {
+        "name": "fn_add_numbers"
+    },
+    {
+        "name": "fn_greet"
+    }
+]
+
 
 generator = Generator()
 
 
-# prompt = build_prompt(
-#     functions,
-#     "What is the sum of 2 and 3?"
-# )
-prompt = "Choose function: fn_add_numbers or fn_greet. Answer:"
-# prompt = build_prompt(
-#     functions,
-#     "Greet john"
-# )
-
 result = generator.generate(
-    prompt,
-    functions,
-    max_tokens=10
+    "What is 2 + 3?",
+    functions
 )
 
 
-print("Generated function:")
 print(result)

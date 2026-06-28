@@ -18,3 +18,10 @@ def build_prompt(functions, user_prompt):
     result += "- Choose exactly one function.\n"
     result += "- Respond only with the function name."
     return result
+
+
+def extract_arguments(functions, user_prompt):
+    pass
+
+
+
