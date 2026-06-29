@@ -1,27 +1,51 @@
+def extract_string(prompt):
 
+    if "'" in prompt:
+        start = prompt.find("'")
+        end = prompt.find("'", start + 1)
 
-def build_prompt(functions, user_prompt):
+        return prompt[start + 1:end]
 
-    result = "You are a function calling assistant.\n\n"
-    result += "Available functions:\n"
+    elif '"' in prompt:
+        start = prompt.find('"')
+        end = prompt.find('"', start + 1)
 
-    for func in functions:
-        result += f"\nFunction: {func['name']}\n"
-        result += f"Description: {func['description']}\n"
-        result += f"Parameters:\n"
-        for param_name, param_info in func["parameters"].items():
-            result += f"- {param_name}: {param_info['type']}\n"
+        return prompt[start + 1:end]
 
-    result += f"\nUser request:\n{user_prompt}\n\n"
+    return None
 
-    result += "Instructions:\n"
-    result += "- Choose exactly one function.\n"
-    result += "- Respond only with the function name."
-    return result
+def extract_arguments(user_prompt, parameters):
 
+    words = user_prompt.split()
 
-def extract_arguments(functions, user_prompt):
-    pass
+    arguments = {}
+    for key, param_type in parameters.items():
 
+        if param_type["type"] == "number":
+            for i, word in enumerate(words):
+                
+                clean_word = word.strip("?,.!")
 
+                if clean_word.isdigit():
+                    arguments[key] = int(clean_word)
+                    words.pop(i)
+                    break
+        elif param_type["type"] == "string":
+            value = extract_string(user_prompt)
+            if value:
+                arguments[key] = value
+
+        elif param_type == "boolean":
+            for i, word in enumerate(words):
+                clean_word = word.strip("?,.!").lower()
+                if clean_word == "true":
+                    arguments[key] = True
+                    words.pop(i)
+                    break
+
+                elif clean_word == "false":
+                    arguments[key] = False
+                    words.pop(i)
+                    break
+    return arguments
 

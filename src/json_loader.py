@@ -14,3 +14,8 @@ def load_json(path):
     except json.JSONDecodeError:
         print(f"Invalid JSON file: {path}")
         return []
+
+def get_parameters(function_name, functions):
+    for func in functions:
+        if func["name"] == function_name:
+            return func["parameters"]
