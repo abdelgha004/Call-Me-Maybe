@@ -1,12 +1,15 @@
+
 from .json_loader import load_json, get_parameters
 from .generator import Generator
 from .parser import extract_arguments
 from .json_builder import build_json, write_json
 from .validator import validator
+from .cli import parse_arguments
 
+args = parse_arguments()
 
-prompt = load_json("data/input/function_calling_tests.json")
-functions = load_json("data/input/functions_definition.json")
+prompt = load_json(args.input)
+functions = load_json(args.functions_definition)
 
 test = Generator()
 result = []
@@ -28,5 +31,5 @@ for prom in prompt:
         )
         result.append(json_extratcted)
 
-write_json(result, "data/output/function_calling_results.json")
+write_json(result, args.output)
 print(result)
