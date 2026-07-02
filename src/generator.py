@@ -50,14 +50,3 @@ class Generator:
             result += self.model.decode([next_token_id])
 
         return self.model.decode(generated_ids)
-            # token = self.model.decode([top_token])
-            # print("TOKEN:", repr(token))
-
-            # result += token
-            # print("RESULT:", result)
-            # generated = result.strip()
-
-            # for name in function_name:
-            #     if generated.endswith(name):
-            #         return name
-        # return None

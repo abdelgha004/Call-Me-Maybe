@@ -14,7 +14,7 @@ def parse_arguments():
     )
     parser.add_argument(
         "--output",
-        default="data/input/function_calls.json"
+        default="data/output/function_calls.json"
     )
 
     return parser.parse_args()
